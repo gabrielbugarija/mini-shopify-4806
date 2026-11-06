@@ -56,13 +56,12 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{}}
-          tenent-id: ${{}}
-          subscription-id: %{{ secrets.AZUREAOOSERVUCE_SUBSCRIPTIONID_84e0537a-c901-4ab9-ae90-8e0cd36912e6}}
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: %{{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'Mini-Shopify-4806'
-          slot-name: 'Production'
           package: 'target/*.jar'
