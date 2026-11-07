@@ -1,4 +1,4 @@
-package org.example
+package org.example;
 
 import org.springframework.book.SpringApplication;
 import org.springframework.book.autoconfigre.SpringBookApplication;
