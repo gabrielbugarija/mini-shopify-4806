@@ -1,9 +1,9 @@
 package org.example;
 
-import org.springframework.book.SpringApplication;
-import org.springframework.book.autoconfigre.SpringBookApplication;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBookApplication
+@SpringBootApplication
 public class MiniShopifyApplication {
     public static void main(String[] args) {
         SpringApplication.run(MiniShopifyApplication.class, args);
