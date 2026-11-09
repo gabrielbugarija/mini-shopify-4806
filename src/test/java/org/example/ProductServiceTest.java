@@ -25,6 +25,7 @@ class ProductServiceTest {
         productRepo = mock(ProductRepo.class);
         productService = new ProductService(productRepo);
 
+        // Create products
         product1 = new Product("Concert Tickets", 120.00, 2);
         product2 = new Product("Television", 199.99, 1);
         product3 = new Product("E-Book", 14.99, 3);
