@@ -1,8 +1,5 @@
 package org.example;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,13 +14,13 @@ class ProductTest {
 
     @Test
     void getProductname() {
-        assertEquals("Concert Tickets", product.getProductname());
+        assertEquals("Concert Tickets", product.getName());
     }
 
     @Test
     void setProductname() {
-        emptyProduct.setProductname("Keychain");
-        assertEquals("Keychain", emptyProduct.getProductname());
+        emptyProduct.setName("Keychain");
+        assertEquals("Keychain", emptyProduct.getName());
     }
 
     @Test
