@@ -1,6 +1,7 @@
 package org.example;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -31,5 +32,19 @@ public class ProductController {
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable Long id) {
         return productService.getProduct(id);
+    }
+
+    @GetMapping("/page")
+    public ModelAndView productsPage() {
+        ModelAndView model = new ModelAndView("products");
+        model.addObject("products", productService.getAllProducts());
+        return model;
+    }
+
+    @GetMapping("/{id}/page")
+    public ModelAndView productPage(@PathVariable Long id) {
+        ModelAndView model = new ModelAndView("product-details");
+        model.addObject("product", productService.getProduct(id));
+        return model;
     }
 }
