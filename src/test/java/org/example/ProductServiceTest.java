@@ -78,7 +78,7 @@ class ProductServiceTest {
         List<Product> products = productService.getAllProducts();
 
         assertEquals(3, products.size());
-        assertEquals("Concert Tickets", products.get(0).getProductname());
+        assertEquals("Concert Tickets", products.get(0).getName());
         assertEquals(199.99, products.get(1).getPrice());
         assertEquals(3, products.get(2).getQuantity());
     }
@@ -91,7 +91,7 @@ class ProductServiceTest {
         Product product = productService.getProduct(id);
 
         assertEquals(product2, product);
-        assertEquals("Television", product.getProductname());
+        assertEquals("Television", product.getName());
         assertEquals(199.99, product.getPrice());
         assertEquals(1, product.getQuantity());
     }

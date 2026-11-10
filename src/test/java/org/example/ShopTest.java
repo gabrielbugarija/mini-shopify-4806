@@ -19,9 +19,9 @@ class ShopTest {
         shop.addProduct(product2);
         shop.addProduct(product3);
 
-        assertEquals("Concert Tickets", shop.getProducts().get(0).getProductname());
-        assertEquals("Television", shop.getProducts().get(1).getProductname());
-        assertEquals("E-Book", shop.getProducts().get(2).getProductname());
+        assertEquals("Concert Tickets", shop.getProducts().get(0).getName());
+        assertEquals("Television", shop.getProducts().get(1).getName());
+        assertEquals("E-Book", shop.getProducts().get(2).getName());
     }
 
     @Test
@@ -33,7 +33,7 @@ class ShopTest {
         shop.removeProduct(product2);
         Product productAtRemovedIndex = shop.getProducts().get(1);
 
-        assertNotEquals("Television", productAtRemovedIndex.getProductname());
+        assertNotEquals("Television", productAtRemovedIndex.getName());
         assertNotEquals(199.99, productAtRemovedIndex.getPrice());
         assertNotEquals(1, productAtRemovedIndex.getQuantity());
     }
