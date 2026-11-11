@@ -26,8 +26,11 @@ public class Shop {
     @Column(name = "tag")
     private Set<String> tags = new LinkedHashSet<>();
 
+    // @JoinColumn puts a shop_id foreign key column in the product table.
+    // Without it, Hibernate creates an extra shop_products join table for this one-to-many.
     @OneToMany(cascade = CascadeType.ALL,
             orphanRemoval = true)
+    @JoinColumn(name = "shop_id")
     private List<Product> products = new ArrayList<>();
 
     protected Shop() {} // Required by JPA
