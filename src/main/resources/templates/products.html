@@ -8,6 +8,8 @@
 
 <h1>Our Products</h1>
 
+<a th:href="@{/}">Back to shops</a>
+
 <div th:each="product : ${products}">
     <h2 th:text="${product.name}">Product Name</h2>
 
@@ -19,7 +21,7 @@
         Quantity: <span th:text="${product.quantity}">0</span>
     </p>
 
-    <a th:href="@{/products/{id}(id=${product.id})}">
+    <a th:href="@{/products/{id}/page(id=${product.id})}">
         View Product
     </a>
 
