@@ -1,0 +1,5 @@
+target/
+mini-shopify-data/
+*.mv.db
+*.trace.db
+.idea/
