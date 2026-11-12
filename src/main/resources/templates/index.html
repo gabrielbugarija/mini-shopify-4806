@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UFT-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
         Mini Shopify SYSC4806
@@ -57,15 +57,13 @@
             font-size: 22px;
         }
 
-        .price {
-            font-size: 18px;
-            font-weight: bold;
-            color: #222;
-        }
-
-        .quantity {
-            font-size: 14px;
-            color: #666;
+        .view-products {
+            display: inline-block;
+            padding: 10px 16px;
+            border-radius: 4px;
+            background-color: #222;
+            color: white;
+            text-decoration: none;
         }
 
     </style>
@@ -79,30 +77,20 @@
 <main>
     <h1>Welcome to Mini Shopify</h1>
 
-    <p>Browse our available products</p>
+    <h2>Shops</h2>
 
-    <div th:if="${#lists.isEmpty(products)}">
-        <p>No products available yet.</p>
-    </div>
+    <p th:if="${#lists.isEmpty(shops)}">No shops available yet.</p>
 
     <div class="product-grid">
-        <a class="product-card"
-           th:each="product : ${products}"
-           th:href="@{/store/products/{id}(id=${product.id})}">
-
-            <h3 th:text="${product.name}">Product Name</h3>
-
-            <p class="price"
-               th:text="'$' + ${product.price}">
-                $0.00
-            </p>
-
-            <p class="quantity"
-               th:text="${product.quantity} + ' available'">
-                0 available
-            </p>
-        </a>
+        <article class="product-card" th:each="shop : ${shops}">
+            <h3 th:text="${shop.name}">Shop Name</h3>
+            <p th:text="${shop.description}">Shop description</p>
+            <p th:if="${!#sets.isEmpty(shop.tags)}"
+               th:text="${#strings.setJoin(shop.tags, ', ')}">Tags</p>
+            <a class="view-products" th:href="@{/products/page}">View products</a>
+        </article>
     </div>
+
 </main>
 
 </body>

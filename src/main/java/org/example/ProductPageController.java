@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ProductPageController {
 
-    private final ProductService productService;
+    private final ShopService shopService;
 
-    public ProductPageController(ProductService productService) {
-        this.productService = productService;
+    public ProductPageController(ShopService shopService) {
+        this.shopService = shopService;
     }
 
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("products", productService.getAllProducts());
+        model.addAttribute("shops", shopService.getAllShops());
         return "index";
     }
 }
