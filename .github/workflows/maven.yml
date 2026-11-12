@@ -41,6 +41,7 @@ jobs:
         fail-fast: false
         matrix:
           test:
+            - ProductServicePersistenceTest
             - ProductServiceTest
             - ProductTest
             - ShopServiceTest
