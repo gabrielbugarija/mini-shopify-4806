@@ -17,13 +17,13 @@ class ProductTest {
 
     @Test
     void getProductname() {
-        assertEquals("Concert Tickets", product.getProductname());
+        assertEquals("Concert Tickets", product.getName());
     }
 
     @Test
     void setProductname() {
-        emptyProduct.setProductname("Keychain");
-        assertEquals("Keychain", emptyProduct.getProductname());
+        emptyProduct.setName("Keychain");
+        assertEquals("Keychain", emptyProduct.getName());
     }
 
     @Test
