@@ -72,10 +72,12 @@
 <body>
 <header>
     <h2>Mini Shopify</h2>
+    <nav aria-label="Interface"><strong>Shopper</strong> | <a th:href="@{/merchant}" style="color: white">Switch to merchant</a></nav>
 </header>
 
 <main>
     <h1>Welcome to Mini Shopify</h1>
+    <a class="view-products" th:href="@{/products/page}">Browse all products</a>
 
     <h2>Shops</h2>
 

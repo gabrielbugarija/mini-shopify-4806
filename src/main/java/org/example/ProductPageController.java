@@ -18,4 +18,9 @@ public class ProductPageController {
         model.addAttribute("shops", shopService.getAllShops());
         return "index";
     }
+
+    @GetMapping("/merchant")
+    public String merchant() {
+        return "merchant";
+    }
 }
