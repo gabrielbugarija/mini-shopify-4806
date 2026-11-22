@@ -15,7 +15,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.springframework.web.server.ResponseStatusException;
 
-@SpringBootTest
+@SpringBootTest(properties = {
+        "spring.datasource.url=jdbc:h2:mem:persistence-tests;DB_CLOSE_DELAY=-1",
+        "spring.jpa.hibernate.ddl-auto=create-drop"
+})
 @Transactional
 public class ProductServicePersistenceTest {
 
