@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Shop</title>
+</head>
+<body>
+
+<h1>Create a Shop</h1>
+<form th:action="@{/merchant/shops/create}" method="post">
+    <label>Shop Name:</label>
+    <input type="text" name="name" required>
+    <br><br>
+    <label>Description:</label>
+    <input type="text" name="description">
+    <br><br>
+    <label>Categories:</label>
+    <input type="text" name="tagsText"
+           placeholder="Clothing, Electronics">
+    <br><br>
+    <button type="submit">Create Shop</button>
+</form>
+
+<a th:href="@{/merchant}">Cancel</a>
+
+</body>
+</html>
