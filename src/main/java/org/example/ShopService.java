@@ -34,9 +34,28 @@ public class ShopService {
         return shopRepo.save(shop);
     }
 
-    // Temporary: the home page lists every shop. Replaced by search() in the next PR.
     public List<Shop> getAllShops() {
         return shopRepo.findAll();
+    }
+
+    /**
+     * Finds shops whose name, description, or tags contain the query (case-insensitive).
+     * A blank or null query returns every shop.
+     */
+    public List<Shop> search(String query) {
+        if (query == null || query.isBlank()) {
+            return getAllShops();
+        }
+        String q = query.trim().toLowerCase();
+        return shopRepo.findAll().stream()
+                .filter(shop -> contains(shop.getName(), q)
+                        || contains(shop.getDescription(), q)
+                        || shop.getTags().stream().anyMatch(tag -> contains(tag, q)))
+                .toList();
+    }
+
+    private static boolean contains(String text, String lowerQuery) {
+        return text != null && text.toLowerCase().contains(lowerQuery);
     }
 
     public Shop getShop(Long id) {

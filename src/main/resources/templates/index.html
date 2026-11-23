@@ -66,6 +66,32 @@
             text-decoration: none;
         }
 
+        .shop-search {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .shop-search input {
+            flex: 1 1 240px;
+            max-width: 400px;
+            padding: 8px 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .shop-search button {
+            padding: 8px 16px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            background-color: #222;
+            color: white;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 
@@ -81,7 +107,17 @@
 
     <h2>Shops</h2>
 
-    <p th:if="${#lists.isEmpty(shops)}">No shops available yet.</p>
+    <form class="shop-search" role="search" th:action="@{/}" method="get">
+        <label for="shop-search-input">Search shops</label>
+        <input id="shop-search-input" type="search" name="q" th:value="${query}"
+               placeholder="Name, description, or tag">
+        <button type="submit">Search</button>
+        <a th:if="${!#strings.isEmpty(query)}" th:href="@{/}">Clear</a>
+    </form>
+
+    <p th:if="${#lists.isEmpty(shops) and #strings.isEmpty(query)}">No shops available yet.</p>
+    <p th:if="${#lists.isEmpty(shops) and !#strings.isEmpty(query)}"
+       th:text="|No shops match &quot;${query}&quot;.|">No shops match your search.</p>
 
     <div class="product-grid">
         <article class="product-card" th:each="shop : ${shops}">
