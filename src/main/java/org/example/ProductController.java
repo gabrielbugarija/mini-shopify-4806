@@ -47,4 +47,11 @@ public class ProductController {
         model.addObject("product", productService.getProduct(id));
         return model;
     }
+
+    @PostMapping("/{id}/purchase")
+    public Product purchaseProduct(
+            @PathVariable Long id, @RequestParam int amount) {
+        return productService.purchaseProduct(id,amount);
+    }
+
 }

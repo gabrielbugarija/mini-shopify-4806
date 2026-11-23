@@ -46,4 +46,24 @@ public class ProductService {
                         "No product with id " + id
                 ));
     }
+
+    @Transactional
+    public Product purchaseProduct(Long id, int amount) {
+
+        Product product = getProduct(id);
+
+        if (amount <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Purchase quantity must be greater than zero");
+        }
+
+        if (product.getQuantity() < amount) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not enough stock available");
+        }
+
+        product.setQuantity(product.getQuantity() - amount);
+
+        return productRepo.save(product);
+    }
+
+
 }
