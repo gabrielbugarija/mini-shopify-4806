@@ -2,6 +2,8 @@ package org.example;
 
 import jakarta.persistence.*;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 
 @Entity
@@ -14,6 +16,12 @@ public class Product {
     private String name;
     private double price;
     private int quantity;
+
+    // Categories, stored the same way as Shop tags (one row per tag in product_tags)
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "product_tags", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "tag")
+    private Set<String> tags = new LinkedHashSet<>();
 
     protected Product() {}
 
@@ -45,6 +53,14 @@ public class Product {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public Set<String> getTags() {
+        return tags;
+    }
+
+    public void addTag(String tag) {
+        tags.add(tag);
     }
 
 }

@@ -19,9 +19,10 @@ public class ProductController {
     public Product createProduct(
             @RequestParam String name,
             @RequestParam double price,
-            @RequestParam int quantity) {
+            @RequestParam int quantity,
+            @RequestParam(required = false) String tagsText) {
 
-        return productService.createProduct(name, price, quantity);
+        return productService.createProduct(name, price, quantity, tagsText);
     }
 
     @GetMapping

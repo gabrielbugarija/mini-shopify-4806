@@ -70,6 +70,17 @@ public class ProductServicePersistenceTest {
     }
 
     @Test
+    void createProductSavesTagsToDatabase() {
+        Product saved = productService.createProduct("Laptop", 999.99, 5, "Electronics, Computers");
+
+        entityManager.flush();
+        entityManager.clear();
+
+        Product found = productRepo.findById(saved.getId()).orElseThrow();
+        assertEquals(Set.of("electronics", "computers"), found.getTags());
+    }
+
+    @Test
     void savingShopAlsoSavesItsProducts() {
         Shop shop = new Shop("TechStore", "Electronics");
         shop.addProduct(new Product("Laptop", 999.99, 10));

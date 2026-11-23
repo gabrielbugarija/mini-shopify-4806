@@ -22,6 +22,10 @@
         Quantity: <span th:text="${product.quantity}">0</span>
     </p>
 
+    <p th:if="${!#sets.isEmpty(product.tags)}">
+        Tags: <span th:text="${#strings.setJoin(product.tags, ', ')}">tags</span>
+    </p>
+
     <a th:href="@{/products/{id}/page(id=${product.id})}">
         View Product
     </a>

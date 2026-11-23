@@ -47,4 +47,15 @@ class ProductTest {
         emptyProduct.setQuantity(3);
         assertEquals(3, emptyProduct.getQuantity());
     }
+
+    @Test
+    void addTag() {
+        assertTrue(product.getTags().isEmpty());
+
+        product.addTag("music");
+        product.addTag("events");
+
+        assertEquals(2, product.getTags().size());
+        assertTrue(product.getTags().contains("music"));
+    }
 }

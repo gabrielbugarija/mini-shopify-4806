@@ -5,8 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -94,5 +96,23 @@ class ProductServiceTest {
         assertEquals("Television", product.getName());
         assertEquals(199.99, product.getPrice());
         assertEquals(1, product.getQuantity());
+    }
+
+    @Test
+    void createProductWithTags() {
+        when(productRepo.save(any(Product.class))).thenAnswer(call -> call.getArgument(0));
+
+        Product product = productService.createProduct("Laptop", 999.99, 5, " Electronics, Computers,,electronics ");
+
+        assertEquals(Set.of("electronics", "computers"), product.getTags());
+    }
+
+    @Test
+    void createProductWithoutTags() {
+        when(productRepo.save(any(Product.class))).thenAnswer(call -> call.getArgument(0));
+
+        Product product = productService.createProduct("Laptop", 999.99, 5);
+
+        assertTrue(product.getTags().isEmpty());
     }
 }
