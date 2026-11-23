@@ -16,8 +16,12 @@ public class ProductService {
         this.productRepo = productRepo;
     }
 
-    @Transactional
     public Product createProduct(String name, double price, int quantity) {
+        return createProduct(name, price, quantity, null);
+    }
+
+    @Transactional
+    public Product createProduct(String name, double price, int quantity, String tagsText) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Product name is required");
         }
@@ -31,6 +35,7 @@ public class ProductService {
         }
 
         Product product = new Product(name.trim(), price, quantity);
+        ShopService.parseTags(tagsText).forEach(product::addTag);
 
         return productRepo.save(product);
     }
