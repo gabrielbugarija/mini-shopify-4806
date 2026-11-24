@@ -60,7 +60,8 @@ public class ProductPageController {
             @RequestParam double price,
             @RequestParam int quantity) {
         shopService.addProductToShop(id, name, price, quantity);
-        return "redirect:/merchant/shops/" + id + "/products";
+        return "redirect:/merchant/shops/" + id + "/products";}
+
     @PostMapping("/products/{id}/purchase-page")
     public String purchaseProductFromPage(
             @PathVariable Long id,
