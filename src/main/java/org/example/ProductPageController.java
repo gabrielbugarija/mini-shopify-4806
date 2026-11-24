@@ -20,8 +20,9 @@ public class ProductPageController {
     }
 
     @GetMapping("/")
-    public String home(Model model) {
-        model.addAttribute("shops", shopService.getAllShops());
+    public String home(@RequestParam(name = "q", required = false) String query, Model model) {
+        model.addAttribute("shops", shopService.search(query));
+        model.addAttribute("query", query == null ? "" : query.trim());
         return "index";
     }
 
