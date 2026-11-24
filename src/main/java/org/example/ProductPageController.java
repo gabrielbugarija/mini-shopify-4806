@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ProductPageController {
 
     private final ShopService shopService;
+    private final ProductService productService;
 
-    public ProductPageController(ShopService shopService) {
+    public ProductPageController(ShopService shopService, ProductService productService)
+    {
         this.shopService = shopService;
+        this.productService = productService;
     }
 
     @GetMapping("/")
@@ -58,5 +61,13 @@ public class ProductPageController {
             @RequestParam int quantity) {
         shopService.addProductToShop(id, name, price, quantity);
         return "redirect:/merchant/shops/" + id + "/products";
+    @PostMapping("/products/{id}/purchase-page")
+    public String purchaseProductFromPage(
+            @PathVariable Long id,
+            @RequestParam int amount) {
+
+        productService.purchaseProduct(id, amount);
+
+        return "redirect:/products/" + id + "/page";
     }
 }

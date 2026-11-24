@@ -19,9 +19,10 @@ public class ProductController {
     public Product createProduct(
             @RequestParam String name,
             @RequestParam double price,
-            @RequestParam int quantity) {
+            @RequestParam int quantity,
+            @RequestParam(required = false) String tagsText) {
 
-        return productService.createProduct(name, price, quantity);
+        return productService.createProduct(name, price, quantity, tagsText);
     }
 
     @GetMapping
@@ -47,4 +48,11 @@ public class ProductController {
         model.addObject("product", productService.getProduct(id));
         return model;
     }
+
+    @PostMapping("/{id}/purchase")
+    public Product purchaseProduct(
+            @PathVariable Long id, @RequestParam int amount) {
+        return productService.purchaseProduct(id,amount);
+    }
+
 }

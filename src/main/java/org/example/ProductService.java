@@ -16,8 +16,12 @@ public class ProductService {
         this.productRepo = productRepo;
     }
 
-    @Transactional
     public Product createProduct(String name, double price, int quantity) {
+        return createProduct(name, price, quantity, null);
+    }
+
+    @Transactional
+    public Product createProduct(String name, double price, int quantity, String tagsText) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Product name is required");
         }
@@ -31,6 +35,7 @@ public class ProductService {
         }
 
         Product product = new Product(name.trim(), price, quantity);
+        ShopService.parseTags(tagsText).forEach(product::addTag);
 
         return productRepo.save(product);
     }
@@ -46,4 +51,24 @@ public class ProductService {
                         "No product with id " + id
                 ));
     }
+
+    @Transactional
+    public Product purchaseProduct(Long id, int amount) {
+
+        Product product = getProduct(id);
+
+        if (amount <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Purchase quantity must be greater than zero");
+        }
+
+        if (product.getQuantity() < amount) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not enough stock available");
+        }
+
+        product.setQuantity(product.getQuantity() - amount);
+
+        return productRepo.save(product);
+    }
+
+
 }

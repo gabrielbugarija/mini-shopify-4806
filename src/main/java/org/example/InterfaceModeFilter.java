@@ -36,9 +36,10 @@ public class InterfaceModeFilter extends OncePerRequestFilter {
         boolean shopOrProduct = path.equals("/shops") || path.startsWith("/shops/")
                 || path.equals("/products") || path.startsWith("/products/")
                 || path.startsWith("/merchant/");
+        boolean customerPurchase = "POST".equals(request.getMethod()) && (path.matches("/products/\\d+/purchase") || path.matches("/products/\\d+/purchase-page"));
         HttpSession session = request.getSession(false);
         boolean merchant = session != null && "merchant".equals(session.getAttribute(MODE));
-        if (shopOrProduct && !READ_METHODS.contains(request.getMethod()) && !merchant) {
+        if (shopOrProduct && !READ_METHODS.contains(request.getMethod()) && !merchant && !customerPurchase) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN,
                     "Switch to merchant mode to add or edit shops and products.");
             return;
