@@ -55,4 +55,22 @@ public class ShopService {
                 .distinct()
                 .toList();
     }
+
+    @Transactional
+    public Product addProductToShop(Long shopId, String name, double price, int quantity) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Product name is required");
+        }
+        if (price < 0) {
+            throw new IllegalArgumentException("Price cannot be negative");
+        }
+        if (quantity < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative");
+        }
+        Shop shop = getShop(shopId);
+        Product product = new Product(name.trim(), price, quantity);
+        shop.addProduct(product);
+        shopRepo.save(shop);
+        return product;
+    }
 }
