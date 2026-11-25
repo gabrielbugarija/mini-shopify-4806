@@ -1,37 +1,42 @@
-
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Our Products</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Products | Mini Shopify</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<nav aria-label="Interface"><a th:href="@{/}">Shopper</a> | <a th:href="@{/merchant}">Switch to merchant</a></nav>
+<header>
+    <h2>Mini Shopify</h2>
+    <nav aria-label="Interface"><a th:href="@{/}">Shopper</a> | <a th:href="@{/merchant}">Switch to merchant</a></nav>
+</header>
 
-<h1>Our Products</h1>
+<main>
+    <a class="back-link" th:href="@{/}">&larr; Back to shops</a>
 
-<a th:href="@{/}">Back to shops</a>
+    <h1>Our Products</h1>
 
-<div th:each="product : ${products}">
-    <h2 th:text="${product.name}">Product Name</h2>
+    <p th:if="${#lists.isEmpty(products)}">No products available yet.</p>
 
-    <p>
-        Price: $<span th:text="${product.price}">0.00</span>
-    </p>
+    <div class="product-grid">
+        <article class="product-card" th:each="product : ${products}">
+            <h2 th:text="${product.name}">Product Name</h2>
 
-    <p>
-        Quantity: <span th:text="${product.quantity}">0</span>
-    </p>
+            <p class="price" th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')}">$0.00</p>
 
-    <p th:if="${!#sets.isEmpty(product.tags)}">
-        Tags: <span th:text="${#strings.setJoin(product.tags, ', ')}">tags</span>
-    </p>
+            <p class="stock sold-out" th:if="${product.quantity <= 0}">Sold out</p>
+            <p class="stock" th:if="${product.quantity > 0}"
+               th:text="${product.quantity} + ' in stock'">10 in stock</p>
 
-    <a th:href="@{/products/{id}/page(id=${product.id})}">
-        View Product
-    </a>
+            <ul class="tags" th:if="${!#sets.isEmpty(product.tags)}" aria-label="Tags">
+                <li th:each="tag : ${product.tags}" th:text="${tag}">tag</li>
+            </ul>
 
-    <hr>
-</div>
-
+            <a class="view-product" th:href="@{/products/{id}/page(id=${product.id})}">View product</a>
+        </article>
+    </div>
+</main>
 </body>
 </html>

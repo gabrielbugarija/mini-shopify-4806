@@ -1,45 +1,60 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Product Details</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${product.name} + ' | Mini Shopify'">Product Details</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<nav aria-label="Interface"><a th:href="@{/}">Shopper</a> | <a th:href="@{/merchant}">Switch to merchant</a></nav>
+<header>
+    <h2>Mini Shopify</h2>
+    <nav aria-label="Interface"><a th:href="@{/}">Shopper</a> | <a th:href="@{/merchant}">Switch to merchant</a></nav>
+</header>
 
-<h1 th:text="${product.name}">Product Name</h1>
+<main class="narrow">
+    <a class="back-link" th:href="@{/products/page}">&larr; Back to all products</a>
 
-<p>
-    Price: $<span th:text="${product.price}">0.00</span>
-</p>
+    <p class="message success" role="status" th:if="${successMessage}" th:text="${successMessage}">Purchase complete.</p>
+    <p class="message error" role="alert" th:if="${errorMessage}" th:text="${errorMessage}">Something went wrong.</p>
 
-<p>
-    Available Quantity:
-    <span th:text="${product.quantity}">0</span>
-</p>
+    <div class="product-layout">
+        <div class="product-image" aria-hidden="true"
+             th:text="${#strings.toUpperCase(#strings.substring(product.name, 0, 1))}">P</div>
 
-<p th:if="${!#sets.isEmpty(product.tags)}">
-    Tags: <span th:text="${#strings.setJoin(product.tags, ', ')}">tags</span>
-</p>
+        <div class="product-info">
+            <h1 th:text="${product.name}">Product Name</h1>
 
-<a th:href="@{/}">Back to Shops and Products</a>
+            <p class="price" th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')}">$0.00</p>
 
-<form th:action="@{/products/{id}/purchase-page(id=${product.id})}"
-      method="post">
+            <span class="badge sold-out" th:if="${product.quantity <= 0}">Sold out</span>
+            <span class="badge low-stock" th:if="${product.quantity > 0 and product.quantity <= 5}"
+                  th:text="'Only ' + ${product.quantity} + ' left'">Only 3 left</span>
+            <span class="badge in-stock" th:if="${product.quantity > 5}"
+                  th:text="${product.quantity} + ' in stock'">10 in stock</span>
 
-    <label for="amount">Quantity:</label>
+            <ul class="tags" th:if="${!#sets.isEmpty(product.tags)}" aria-label="Tags">
+                <li th:each="tag : ${product.tags}" th:text="${tag}">tag</li>
+            </ul>
 
-    <input type="number"
-           id="amount"
-           name="amount"
-           value="1"
-           min="1"
-           th:max="${product.quantity}"
-           required>
-
-    <button type="submit"
-            th:disabled="${product.quantity <= 0}">
-        Purchase
-    </button>
-</form>
+            <form class="purchase-form"
+                  th:action="@{/products/{id}/purchase-page(id=${product.id})}"
+                  method="post">
+                <label for="amount">Quantity</label>
+                <input type="number"
+                       id="amount"
+                       name="amount"
+                       value="1"
+                       min="1"
+                       th:max="${product.quantity}"
+                       th:disabled="${product.quantity <= 0}"
+                       required>
+                <button type="submit" th:disabled="${product.quantity <= 0}"
+                        th:text="${product.quantity <= 0} ? 'Sold out' : 'Purchase'">Purchase</button>
+            </form>
+        </div>
+    </div>
+</main>
 </body>
 </html>

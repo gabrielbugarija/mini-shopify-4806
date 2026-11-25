@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ProductPageController {
@@ -13,8 +15,7 @@ public class ProductPageController {
     private final ShopService shopService;
     private final ProductService productService;
 
-    public ProductPageController(ShopService shopService, ProductService productService)
-    {
+    public ProductPageController(ShopService shopService, ProductService productService) {
         this.shopService = shopService;
         this.productService = productService;
     }
@@ -61,14 +62,22 @@ public class ProductPageController {
             @RequestParam double price,
             @RequestParam int quantity) {
         shopService.addProductToShop(id, name, price, quantity);
-        return "redirect:/merchant/shops/" + id + "/products";}
+        return "redirect:/merchant/shops/" + id + "/products";
+    }
 
     @PostMapping("/products/{id}/purchase-page")
     public String purchaseProductFromPage(
             @PathVariable Long id,
-            @RequestParam int amount) {
+            @RequestParam int amount,
+            RedirectAttributes redirectAttributes) {
 
-        productService.purchaseProduct(id, amount);
+        try {
+            productService.purchaseProduct(id, amount);
+            redirectAttributes.addFlashAttribute("successMessage",
+                    "Purchase complete. Quantity bought: " + amount);
+        } catch (ResponseStatusException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getReason());
+        }
 
         return "redirect:/products/" + id + "/page";
     }
