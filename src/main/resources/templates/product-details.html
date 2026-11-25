@@ -5,169 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${product.name} + ' | Mini Shopify'">Product Details</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: whitesmoke;
-            color: #333;
-        }
-
-        header {
-            background-color: #222;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        header a {
-            color: white;
-        }
-
-        main {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 24px 20px 48px;
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .product-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 32px;
-            background-color: white;
-            padding: 28px;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Placeholder until products have pictures */
-        .product-image {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 280px;
-            border-radius: 8px;
-            background-color: #eee;
-            color: #999;
-            font-size: 64px;
-            font-weight: bold;
-        }
-
-        .product-info h1 {
-            font-size: 32px;
-            margin: 0 0 8px;
-        }
-
-        .price {
-            font-size: 28px;
-            font-weight: bold;
-            margin: 0 0 16px;
-        }
-
-        .stock {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .stock.in-stock {
-            background-color: #e3f4e6;
-            color: #1e6b2e;
-        }
-
-        .stock.low-stock {
-            background-color: #fff3d6;
-            color: #8a5a00;
-        }
-
-        .stock.sold-out {
-            background-color: #fbe3e3;
-            color: #a12626;
-        }
-
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            list-style: none;
-            padding: 0;
-            margin: 16px 0;
-        }
-
-        .tags li {
-            padding: 4px 10px;
-            border-radius: 12px;
-            background-color: #eee;
-            font-size: 14px;
-        }
-
-        .purchase-form {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 10px;
-            margin-top: 24px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-        }
-
-        .purchase-form input {
-            width: 80px;
-            padding: 8px 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .purchase-form button {
-            padding: 10px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 4px;
-            background-color: #222;
-            color: white;
-            cursor: pointer;
-        }
-
-        .purchase-form button:disabled {
-            background-color: #aaa;
-            cursor: not-allowed;
-        }
-
-        .message {
-            padding: 12px 16px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-        }
-
-        .message.success {
-            background-color: #e3f4e6;
-            color: #1e6b2e;
-        }
-
-        .message.error {
-            background-color: #fbe3e3;
-            color: #a12626;
-        }
-
-        @media (max-width: 700px) {
-            .product-layout {
-                grid-template-columns: 1fr;
-            }
-
-            .product-image {
-                min-height: 180px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <header>
@@ -175,7 +13,7 @@
     <nav aria-label="Interface"><a th:href="@{/}">Shopper</a> | <a th:href="@{/merchant}">Switch to merchant</a></nav>
 </header>
 
-<main>
+<main class="narrow">
     <a class="back-link" th:href="@{/products/page}">&larr; Back to all products</a>
 
     <p class="message success" role="status" th:if="${successMessage}" th:text="${successMessage}">Purchase complete.</p>
@@ -190,10 +28,10 @@
 
             <p class="price" th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')}">$0.00</p>
 
-            <span class="stock sold-out" th:if="${product.quantity <= 0}">Sold out</span>
-            <span class="stock low-stock" th:if="${product.quantity > 0 and product.quantity <= 5}"
+            <span class="badge sold-out" th:if="${product.quantity <= 0}">Sold out</span>
+            <span class="badge low-stock" th:if="${product.quantity > 0 and product.quantity <= 5}"
                   th:text="'Only ' + ${product.quantity} + ' left'">Only 3 left</span>
-            <span class="stock in-stock" th:if="${product.quantity > 5}"
+            <span class="badge in-stock" th:if="${product.quantity > 5}"
                   th:text="${product.quantity} + ' in stock'">10 in stock</span>
 
             <ul class="tags" th:if="${!#sets.isEmpty(product.tags)}" aria-label="Tags">
