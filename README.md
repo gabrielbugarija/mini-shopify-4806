@@ -70,10 +70,10 @@ Then open http://localhost:8080.
 
 ## Database schema 
 - SHOP(ID, NAME, DESCRIPTION)
-- Key: ID
+  Key: ID
 
 - PRODUCT(ID, NAME, PRICE, QUANTITY, SHOP_ID)
-- Key: ID
+  Key: ID
 
 - SHOP_TAGS(SHOP_ID, TAG)
-- Key: SHOP_ID, TAG
+  Key: SHOP_ID, TAG
