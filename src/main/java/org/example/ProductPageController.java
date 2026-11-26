@@ -42,8 +42,16 @@ public class ProductPageController {
     public String createShop(
             @RequestParam String name,
             @RequestParam(required = false) String description,
-            @RequestParam(required = false) String tagsText) {
-        shopService.createShop(name, description, tagsText);
+            @RequestParam(required = false) String tagsText, Model model) {
+        try {
+            shopService.createShop(name, description, tagsText);
+        } catch (ResponseStatusException ex) {
+            model.addAttribute("errorMessage", ex.getReason());
+            model.addAttribute("name", name);
+            model.addAttribute("description", description);
+            model.addAttribute("tagsText", tagsText);
+            return "create-shop";
+        }
         return "redirect:/merchant";
     }
 

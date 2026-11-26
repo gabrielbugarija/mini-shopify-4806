@@ -21,19 +21,20 @@
     <form class="form-card" th:action="@{/merchant/shops/create}" method="post">
         <div class="form-field">
             <label for="shop-name">Shop name</label>
-            <input id="shop-name" type="text" name="name" required>
+            <input id="shop-name" type="text" name="name" th:value="${name}" required>
+            <p th:if="${errorMessage}" th:text="${errorMessage}" role="alert"></p>
         </div>
 
         <div class="form-field">
             <label for="shop-description">Description</label>
             <textarea id="shop-description" name="description" rows="4" maxlength="1000"
-                      placeholder="What does your shop sell?"></textarea>
+                      th:text="${description}" placeholder="What does your shop sell?"></textarea>
         </div>
 
         <div class="form-field">
             <label for="shop-tags">Categories</label>
             <input id="shop-tags" type="text" name="tagsText"
-                   placeholder="Clothing, Electronics">
+                   th:value="${tagsText}" placeholder="Clothing, Electronics">
             <small>Separate categories with commas.</small>
         </div>
 
