@@ -69,11 +69,8 @@ Then open http://localhost:8080.
 <img width="1127" height="532" alt="image" src="https://github.com/user-attachments/assets/93dc0e40-affe-49b8-8453-7ee0e11d4fd4" />
 
 ## Database schema 
-- SHOP(ID, NAME, DESCRIPTION)
-  Key: ID
+- SHOP(ID, NAME, DESCRIPTION) || Key: Shop_ID
 
-- PRODUCT(ID, NAME, PRICE, QUANTITY, SHOP_ID)
-  Key: ID
+- PRODUCT(ID, NAME, PRICE, QUANTITY, Shop_ID) || Key: Product_ID
 
-- SHOP_TAGS(SHOP_ID, TAG)
-  Key: SHOP_ID, TAG
+- SHOP_TAGS(Shop_ID, TAG) || Key: Shop_ID, TAG
