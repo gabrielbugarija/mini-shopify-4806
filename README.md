@@ -68,3 +68,12 @@ Then open http://localhost:8080.
 ## High level - Domain model
 <img width="1127" height="532" alt="image" src="https://github.com/user-attachments/assets/93dc0e40-affe-49b8-8453-7ee0e11d4fd4" />
 
+## Database schema 
+- SHOP(ID, NAME, DESCRIPTION)
+- Key: ID
+
+- PRODUCT(ID, NAME, PRICE, QUANTITY, SHOP_ID)
+- Key: ID
+
+- SHOP_TAGS(SHOP_ID, TAG)
+- Key: SHOP_ID, TAG
