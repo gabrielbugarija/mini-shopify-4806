@@ -46,7 +46,8 @@ Then open http://localhost:8080.
 ## Team
 
 | Member | Current focus |
-|James Noel|x|
+|---|---|
+| James Noel | x |
 | Gabriel Bugarija | x |
 | Yuvraj Bains | x |
 | Declan Koster | x |
@@ -62,8 +63,16 @@ Then open http://localhost:8080.
 ## Plan for next sprint (Milestone 2)
 
 - Increased system usability
-- New useful features while maintaining clean code quality 
+- New useful features while maintaining clean code quality
 
+## Plan for next sprint (Milestone 3)
+
+- Login authentication
+- Allow for search with query typos (error distance)
+- Add shopping carts for shoppers
+- JavaScript frontend modifications
+- Increased system usability
+- New useful features while maintaining clean code quality
 
 ## High level - Domain model
 <img width="1127" height="532" alt="image" src="https://github.com/user-attachments/assets/93dc0e40-affe-49b8-8453-7ee0e11d4fd4" />
