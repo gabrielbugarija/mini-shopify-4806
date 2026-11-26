@@ -1,5 +1,7 @@
 package org.example;
 
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +33,15 @@ public class ShopService {
         }
         Shop shop = new Shop(name.trim(), description == null ? "" : description.trim());
         parseTags(tagsText).forEach(shop::addTag);
-        return shopRepo.save(shop);
+        try {
+            return shopRepo.save(shop);
+        } catch (DataIntegrityViolationException ex) {
+            if (ex.getCause() instanceof ConstraintViolationException violation
+                    && "PUBLIC.UX_SHOP_NAME".equalsIgnoreCase(violation.getConstraintName())) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "A shop with that name already exists.", ex);
+            }
+            throw ex;
+        }
     }
 
     public List<Shop> getAllShops() {
